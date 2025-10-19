@@ -62,6 +62,7 @@ export function MapPage({ userRole, onSelectVehicle, hideNearby }: { userRole?: 
         import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
         import L from "leaflet";
 
+        // Minimal, clean MapPage implementation — no duplicated fragments
         type UserRole = "student" | "driver" | "";
 
         export function MapPage({ userRole, onSelectVehicle, hideNearby }: { userRole?: UserRole; onSelectVehicle?: (v: any) => void; hideNearby?: boolean }) {
@@ -158,77 +159,6 @@ export function MapPage({ userRole, onSelectVehicle, hideNearby }: { userRole?: 
                         <div key={v.id} className="p-4 bg-white rounded-2xl shadow" onMouseEnter={() => setPreviewVehicle(v)} onMouseLeave={() => setPreviewVehicle(null)}>
                           <div className="flex items-center justify-between">
                             <div>
-                              <div className="font-semibold">{v.name}</div>
-                              <div className="text-sm text-slate-500">{v.distance}</div>
-                            </div>
-                            <div className="text-right">
-                              <div className="text-sm font-semibold">{v.availableSeats}/{v.totalSeats}</div>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          );
-        }
-                              className={`${
-                                vehicle.status === 'Approaching'
-                                  ? 'bg-green-100 text-green-700 border-green-200'
-                                  : 'bg-slate-100 text-slate-600 border-slate-200'
-                              } border-0 px-3 py-1`}
-                            >
-                              {vehicle.status}
-                            </Badge>
-                          </div>
-
-                          <div className="space-y-3">
-                            <div className="flex justify-between items-center">
-                              <span className="text-sm text-slate-600 font-medium">Available Seats</span>
-                              <span className={`text-sm font-semibold ${
-                                vehicle.availableSeats > 5 ? 'text-green-600' : 'text-amber-600'
-                              }`}>
-                                {vehicle.availableSeats} / {vehicle.totalSeats}
-                              </span>
-                            </div>
-
-                            <div className="flex gap-1">
-                              {Array.from({ length: vehicle.totalSeats }, (_, i) => (
-                                <div
-                                  key={i}
-                                  className={`h-4 flex-1 rounded-full ${
-                                    i < vehicle.totalSeats - vehicle.availableSeats
-                                      ? 'bg-slate-300'
-                                      : vehicle.color === '#f59e0b'
-                                        ? 'bg-amber-400'
-                                        : 'bg-green-400'
-                                  }`}
-                                />
-                              ))}
-                            </div>
-
-                            <div className="flex items-center gap-4 text-xs text-slate-500">
-                              <div className="flex items-center gap-2">
-                                <div className="w-3 h-3 bg-slate-300 rounded-full"></div>
-                                <span>Occupied</span>
-                              </div>
-                              <div className="flex items-center gap-2">
-                                <div
-                                  className="w-3 h-3 rounded-full"
-                                  style={{ backgroundColor: vehicle.color }}
-                                ></div>
-                                <span>Available</span>
-                              </div>
-                            </div>
-                          </div>
-                        </Card>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          );
-        }
+                              export function MapPageMinimal() {
+                                return <div />;
+                              }
