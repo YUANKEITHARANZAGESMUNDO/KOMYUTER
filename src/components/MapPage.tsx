@@ -131,7 +131,7 @@ export function MapPage({ userRole, onSelectVehicle, hideNearby }: { userRole?: 
   };
 
   return (
-    <div className="flex-1 overflow-y-auto bg-slate-50 pb-24">
+  <div className="flex flex-col min-h-screen bg-slate-50">
       {/* Welcome Dialog */}
       <Dialog open={showWelcome} onOpenChange={setShowWelcome}>
         <DialogContent className="max-w-sm">
@@ -227,8 +227,8 @@ export function MapPage({ userRole, onSelectVehicle, hideNearby }: { userRole?: 
         </div>
       </div>
 
-      {/* Map Container */}
-      <div className="h-[60vh] relative overflow-hidden bg-slate-100">
+  {/* Map Container */}
+  <div className="flex-1 min-h-0 relative overflow-hidden bg-slate-100">
         <MapContainer
           center={userLocation}
           zoom={zoom}
@@ -321,118 +321,7 @@ export function MapPage({ userRole, onSelectVehicle, hideNearby }: { userRole?: 
           ))}
         </MapContainer>
 
-        {/* Nearby Vehicles / Preview (rendered outside of map and hidden after selection) */}
-        {!hideNearby && (
-          <div className="absolute left-4 right-4 bottom-4 max-h-[35vh] overflow-auto">
-            <div className="bg-white border-b border-slate-200">
-              <div className="px-6 py-4">
-                <h2 className="text-slate-900 text-lg font-semibold">Nearby Vehicles</h2>
-                <p className="text-slate-600 text-sm">Select a vehicle to view details</p>
-              </div>
-            </div>
-
-            {/* Vehicle Cards */}
-            <div className="p-6 space-y-4 bg-slate-50">
-              {/* Preview area: shows details for hovered vehicle (or first vehicle) */}
-              <div className="px-6 pb-4">
-                {previewVehicle ? (
-                  <Card className="p-4 mb-4 border-0 shadow-sm bg-white rounded-2xl">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-4">
-                        {previewImageVisible && (
-                          <div className="w-12 h-12 rounded-xl flex items-center justify-center text-white font-semibold shadow-lg" style={{ backgroundColor: previewVehicle.color }}>
-                            {previewVehicle.icon}
-                          </div>
-                        )}
-                        <div>
-                          <h4 className="font-semibold text-slate-900">{previewVehicle.name}</h4>
-                          <p className="text-sm text-slate-500">{previewVehicle.driverName} • {previewVehicle.distance}</p>
-                          <p className="text-sm text-slate-500">Route: {previewVehicle.route ?? 'North Bayan, New Market, BSU - Grand Terminal'}</p>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <div className={`text-sm font-semibold ${previewVehicle.availableSeats > 5 ? 'text-green-600' : 'text-amber-600'}`}>{previewVehicle.availableSeats} / {previewVehicle.totalSeats}</div>
-                        <div className="text-xs text-slate-500">Available Seats</div>
-                      </div>
-                    </div>
-                  </Card>
-                ) : (
-                  <Card className="p-4 mb-4 border-0 shadow-sm bg-white rounded-2xl">
-                    <div className="text-sm text-slate-600">Hover over a vehicle or marker to preview details here.</div>
-                  </Card>
-                )}
-              </div>
-
-              {vehicles.map((vehicle) => (
-                <Card key={vehicle.id} className="p-5 border-0 shadow-sm bg-white rounded-2xl" onMouseEnter={() => setPreviewVehicle(vehicle)} onMouseLeave={() => setPreviewVehicle(null)}>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-3">
-                      <div
-                        className="w-12 h-12 rounded-xl flex items-center justify-center text-white font-semibold shadow-lg"
-                        style={{ backgroundColor: vehicle.color }}
-                      >
-                        {vehicle.icon}
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-slate-900 text-lg">{vehicle.name}</h4>
-                        <p className="text-sm text-slate-500">{vehicle.distance}</p>
-                      </div>
-                    </div>
-                    <Badge
-                      className={`${
-                        vehicle.status === 'Approaching'
-                          ? 'bg-green-100 text-green-700 border-green-200'
-                          : 'bg-slate-100 text-slate-600 border-slate-200'
-                      } border-0 px-3 py-1`}
-                    >
-                      {vehicle.status}
-                    </Badge>
-                  </div>
-
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-slate-600 font-medium">Available Seats</span>
-                      <span className={`text-sm font-semibold ${
-                        vehicle.availableSeats > 5 ? 'text-green-600' : 'text-amber-600'
-                      }`}>
-                        {vehicle.availableSeats} / {vehicle.totalSeats}
-                      </span>
-                    </div>
-
-                    <div className="flex gap-1">
-                      {Array.from({ length: vehicle.totalSeats }, (_, i) => (
-                        <div
-                          key={i}
-                          className={`h-4 flex-1 rounded-full ${
-                            i < vehicle.totalSeats - vehicle.availableSeats
-                              ? 'bg-slate-300'
-                              : vehicle.color === '#f59e0b'
-                                ? 'bg-amber-400'
-                                : 'bg-green-400'
-                          }`}
-                        />
-                      ))}
-                    </div>
-
-                    <div className="flex items-center gap-4 text-xs text-slate-500">
-                      <div className="flex items-center gap-2">
-                        <div className="w-3 h-3 bg-slate-300 rounded-full"></div>
-                        <span>Occupied</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <div
-                          className="w-3 h-3 rounded-full"
-                          style={{ backgroundColor: vehicle.color }}
-                        ></div>
-                        <span>Available</span>
-                      </div>
-                    </div>
-                  </div>
-                </Card>
-              ))}
-            </div>
-          </div>
-        )}
+        {/* Nearby vehicles preview removed to allow map to use available space. */}
       </div>
     </div>
   );
